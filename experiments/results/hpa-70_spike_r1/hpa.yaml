@@ -1,0 +1,21 @@
+# Built-in HPA: keep average CPU of the web pods at 70% of their request (200m),
+# i.e. about 140m per pod. Apply with: kubectl apply -f autoscaler/hpa-cpu70.yaml
+# Remove before testing another setting:  kubectl delete hpa web
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: web
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: web
+  minReplicas: 1
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70

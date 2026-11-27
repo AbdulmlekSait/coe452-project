@@ -1,0 +1,20 @@
+{
+  "kind": "hpa",
+  "target": 30,
+  "pattern": "periodic",
+  "repeat": 1,
+  "run": "hpa-30_periodic_r1",
+  "per_pod_target": "CPU % of request",
+  "k6_start_utc": "2026-11-27T11:15:22+00:00",
+  "k6_start_method": "k6 end time - test duration",
+  "k6_exit_code": 0,
+  "summary": {
+    "latency_avg_ms": 9.47,
+    "latency_p95_ms": 18.84,
+    "latency_max_ms": 47.26,
+    "failed_percent": 0.0,
+    "requests": 9599,
+    "requests_per_s": 20.0,
+    "dropped_iterations": 0
+  }
+}

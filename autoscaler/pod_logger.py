@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Record the number of web pods every few seconds to a CSV file.
 
-Columns: desired replicas (spec), ready pods, running pods, how the running
+Columns: desired = spec.replicas, ready = status.readyReplicas, running pods, how the running
 pods are spread over the nodes, and (when an HPA exists) its current CPU
 utilization and desired replicas.
 
@@ -17,7 +17,7 @@ from datetime import datetime, timezone
 
 from kubernetes import client, config
 
-CSV_FIELDS = ["timestamp", "elapsed_s", "spec_replicas", "ready_pods", "running_pods",
+CSV_FIELDS = ["timestamp", "epoch", "elapsed_s", "desired", "ready", "running_pods",
               "pods_per_node", "hpa_cpu_percent", "hpa_desired"]
 
 
@@ -68,7 +68,7 @@ def main():
         while running:
             loop_start = time.monotonic()
             row = {"timestamp": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-                   "elapsed_s": round(loop_start - start, 1)}
+                   "epoch": round(time.time(), 2), "elapsed_s": round(loop_start - start, 1)}
             try:
                 dep = apps.read_namespaced_deployment(args.deployment, args.namespace)
                 pods = core.list_namespaced_pod(args.namespace, label_selector=args.selector).items
@@ -76,8 +76,8 @@ def main():
                                 if p.status.phase == "Running" and not p.metadata.deletion_timestamp]
                 per_node = Counter(p.spec.node_name for p in running_pods)
                 cpu, hpa_desired = hpa_status(autoscaling, args.deployment, args.namespace)
-                row.update(spec_replicas=dep.spec.replicas,
-                           ready_pods=dep.status.ready_replicas or 0,
+                row.update(desired=dep.spec.replicas,
+                           ready=dep.status.ready_replicas or 0,
                            running_pods=len(running_pods),
                            pods_per_node=";".join(f"{n}:{c}" for n, c in sorted(per_node.items())),
                            hpa_cpu_percent=cpu, hpa_desired=hpa_desired)

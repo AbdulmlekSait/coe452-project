@@ -1,0 +1,20 @@
+{
+  "kind": "hpa",
+  "target": 70,
+  "pattern": "ramp",
+  "repeat": 3,
+  "run": "hpa-70_ramp_r3",
+  "per_pod_target": "CPU % of request",
+  "k6_start_utc": "2026-11-27T17:21:09+00:00",
+  "k6_start_method": "k6 end time - test duration",
+  "k6_exit_code": 0,
+  "summary": {
+    "latency_avg_ms": 8.4,
+    "latency_p95_ms": 15.56,
+    "latency_max_ms": 41.77,
+    "failed_percent": 0.0,
+    "requests": 14550,
+    "requests_per_s": 24.25,
+    "dropped_iterations": 0
+  }
+}

@@ -1,0 +1,36 @@
+All commands and output from this session will be recorded in container logs, including credentials and sensitive information passed through the command prompt.
+If you don't see a command prompt, try pressing enter.
+time="2026-11-26T16:15:39Z" level=warning msg="Request Failed" error="Get \"http://web/work\": dial: i/o timeout"
+time="2026-11-26T16:15:39Z" level=warning msg="Request Failed" error="Get \"http://web/work\": dial: i/o timeout"
+
+
+  █ TOTAL RESULTS 
+
+    checks_total.......: 4978   0.168149/s
+    checks_succeeded...: 99.95% 4976 out of 4978
+    checks_failed......: 0.04%  2 out of 4978
+
+    ✗ status is 200
+      ↳  99% — ✓ 4976 / ✗ 2
+
+    HTTP
+    http_req_duration..............: avg=11.4ms  p(95)=23.17ms max=69.07ms
+      { expected_response:true }...: avg=11.41ms p(95)=23.17ms max=69.07ms
+    http_req_failed................: 0.04%  2 out of 4978
+    http_reqs......................: 4978   0.168149/s
+
+    EXECUTION
+    iteration_duration.............: avg=23.67ms p(95)=24.49ms max=30s    
+    iterations.....................: 4978   0.168149/s
+    vus............................: 0      min=0         max=2 
+    vus_max........................: 50     min=50        max=50
+
+    NETWORK
+    data_received..................: 893 kB 30 B/s
+    data_sent......................: 314 kB 11 B/s
+
+
+
+time="2026-11-27T00:28:08Z" level=error msg="test run was aborted because k6 received a 'terminated' signal"
+pod "k6-hpa30-ramp-r1" deleted from default namespace
+pod default/k6-hpa30-ramp-r1 terminated (Error)

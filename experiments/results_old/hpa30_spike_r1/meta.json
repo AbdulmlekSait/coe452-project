@@ -1,0 +1,15 @@
+{
+  "run": "hpa30_spike_r1",
+  "setting": "hpa30",
+  "pattern": "spike",
+  "repeat": 1,
+  "autoscaler": "hpa",
+  "target": null,
+  "hpa_file": "hpa-cpu30.yaml",
+  "start_utc": "2026-11-26T16:16:44+00:00",
+  "end_utc": "2026-11-27T00:26:05+00:00",
+  "k6_exit_code": 1,
+  "summary": {
+    "dropped_iterations": 0
+  }
+}

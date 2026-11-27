@@ -1,0 +1,20 @@
+{
+  "kind": "custom",
+  "target": 15,
+  "pattern": "spike",
+  "repeat": 1,
+  "run": "custom-15_spike_r1",
+  "per_pod_target": "requests/s",
+  "k6_start_utc": "2026-11-27T12:42:34+00:00",
+  "k6_start_method": "k6 end time - test duration",
+  "k6_exit_code": 0,
+  "summary": {
+    "latency_avg_ms": 8.72,
+    "latency_p95_ms": 22.03,
+    "latency_max_ms": 91.84,
+    "failed_percent": 0.0,
+    "requests": 8849,
+    "requests_per_s": 20.11,
+    "dropped_iterations": 0
+  }
+}

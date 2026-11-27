@@ -1,0 +1,20 @@
+{
+  "kind": "custom",
+  "target": 20,
+  "pattern": "ramp",
+  "repeat": 1,
+  "run": "custom-20_ramp_r1",
+  "per_pod_target": "requests/s",
+  "k6_start_utc": "2026-11-27T13:02:29+00:00",
+  "k6_start_method": "k6 end time - test duration",
+  "k6_exit_code": 0,
+  "summary": {
+    "latency_avg_ms": 8.78,
+    "latency_p95_ms": 15.56,
+    "latency_max_ms": 29.25,
+    "failed_percent": 0.0,
+    "requests": 14549,
+    "requests_per_s": 24.25,
+    "dropped_iterations": 0
+  }
+}
