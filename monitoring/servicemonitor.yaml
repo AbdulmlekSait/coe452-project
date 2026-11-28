@@ -1,0 +1,28 @@
+# Tells Prometheus to scrape the app's /metrics through the "web" Service.
+# Applied by: bash monitoring/install.sh  (or: kubectl apply -f monitoring/servicemonitor.yaml)
+#
+# How it finds the app:
+# - selector: picks the Service by its LABEL app=web. k8s/web.yaml has no labels on
+#   the Service yet, so install.sh adds it with "kubectl label". Member 1 is asked to
+#   add it to k8s/web.yaml so it is permanent.
+# - targetPort: 8000 matches "containerPort: 8000" in the web Deployment, so the
+#   Service port doesn't need a name.
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: web
+  namespace: monitoring
+  labels:
+    release: monitoring   # harmless; also makes it work on a default chart install
+spec:
+  namespaceSelector:
+    matchNames:
+      - default
+  selector:
+    matchLabels:
+      app: web
+  endpoints:
+    - targetPort: 8000
+      path: /metrics
+      interval: 5s        # fast enough for a 10-second autoscaler loop
+      scrapeTimeout: 4s

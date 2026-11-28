@@ -1,0 +1,48 @@
+# kube-prometheus-stack settings for Team 10 (minikube on a 4 CPU / 6 GB VM)
+# Goal: keep only what we use, and scrape our app fast enough for the custom autoscaler.
+# Used by: bash monitoring/install.sh
+
+# We don't send alerts. Turning Alertmanager off saves memory.
+alertmanager:
+  enabled: false
+
+# minikube binds these control-plane parts to localhost, so Prometheus can't reach
+# them. Left on, they show as DOWN targets and fire useless alerts. Turn them off.
+kubeControllerManager:
+  enabled: false
+kubeScheduler:
+  enabled: false
+kubeEtcd:
+  enabled: false
+kubeProxy:
+  enabled: false
+
+grafana:
+  adminUser: admin
+  adminPassword: team10-lab   # local lab cluster only, not a real secret
+
+prometheus:
+  prometheusSpec:
+    # Pick up our ServiceMonitor without needing a special "release" label on it.
+    serviceMonitorSelectorNilUsesHelmValues: false
+    podMonitorSelectorNilUsesHelmValues: false
+
+    # Default for cluster metrics (CPU, pod counts). Our app overrides this to 5s
+    # in servicemonitor.yaml, because the custom autoscaler decides every 10s.
+    scrapeInterval: 15s
+    evaluationInterval: 15s
+
+    # Experiments save their own CSV files, so 2 days of history is enough
+    # and keeps memory use low.
+    retention: 2d
+
+    resources:
+      requests:
+        cpu: 200m
+        memory: 512Mi
+
+# Only if the node-exporter pods keep crashing with a "mount propagation" error,
+# remove the # from the next 3 lines and run install.sh again:
+# prometheus-node-exporter:
+#   hostRootFsMount:
+#     enabled: false
